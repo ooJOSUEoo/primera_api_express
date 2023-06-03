@@ -20,30 +20,23 @@ router.get('/:id', (req, res) => {
 //post ----------
 router.post('/', (req, res) => {
   const body = req.body
-  res.status(201).json({
-    message: 'created',
-    data: body
-  })
+  const product = service.create(body)
+  res.status(201).json(product)
 })
 
 //patch ----------
 router.patch('/:id', (req, res) => {
   const {id} = req.params
   const body = req.body
-  res.json({
-    message: 'updated',
-    data: body,
-    id
-  })
+  const product = service.update(id, body)
+  product ? res.status(200).json(product) : res.status(404).json({message: 'not found'})
 })
 
 //delete ----------
 router.delete('/:id', (req, res) => {
   const {id} = req.params
-  res.json({
-    message: 'deleted',
-    id
-  })
+  const product = service.delete(id)
+  product ? res.status(200).json(product) : res.status(404).json({message: 'not found'})
 })
 
 module.exports = router

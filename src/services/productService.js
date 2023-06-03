@@ -19,7 +19,14 @@ class ProductService {
         }
     }
 
-    create(){}
+    create(data){
+        const newProduct = {
+            id: faker.datatype.uuid(),
+            ...data
+        }
+        this.products.push(newProduct)
+        return newProduct
+    }
 
     find(){
         return this.products
@@ -29,9 +36,24 @@ class ProductService {
         return this.products.find(product => product.id === id)
     }
 
-    update(){}
+    update(id, data){
+        const index = this.products.findIndex(product => product.id === id)
+        if(index === -1){
+            return null
+        }
+        const product = this.products[index]
+        this.products[index] = {id, product, ...data}
+        return this.products[index]
+    }
 
-    delete(){}
+    delete(id){{
+        const index = this.products.findIndex(product => product.id === id)
+        if(index === -1){
+            return null
+        }
+        this.products.splice(index, 1)
+        return {message: 'deleted'}
+    }}
 }
 
 module.exports = ProductService
