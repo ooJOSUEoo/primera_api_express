@@ -1,10 +1,23 @@
 const express = require('express');
+const cors = require('cors');
 const routerAPI = require('./routes/indexRoutes');
 const { logErrors, errorHandler } = require('./middlewares/errorHandle');
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+const whilelist = ['http://localhost:3000'];
+const options = {
+  origin: (origin, callback) => {
+    if (whilelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not access'));
+    }
+  },
+}
+app.use(cors()); //cualquier origen
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
