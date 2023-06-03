@@ -1,5 +1,6 @@
 const express = require('express');
 const routerAPI = require('./routes/indexRoutes');
+const { logErrors, errorHandle } = require('./middlewares/errorHandle');
 const app = express();
 const port = 3000;
 
@@ -10,6 +11,9 @@ app.get('/', (req, res) => {
 })
 
 routerAPI(app);
+
+app.use(logErrors)
+app.use(errorHandle)
 
 app.get('/users', (req, res) => {
   const {limit, offset} = req.query;
