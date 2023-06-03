@@ -1,3 +1,4 @@
+const { notFound, conflict } = require("@hapi/boom")
 const faker = require("faker")
 
 class ProductService {
@@ -14,7 +15,8 @@ class ProductService {
                 id: faker.datatype.uuid(),
                 name: faker.commerce.product(),
                 price: faker.commerce.price(),
-                image: faker.image.imageUrl()
+                image: faker.image.imageUrl(),
+                isBlock: faker.datatype.boolean()
             })
         }
     }
@@ -37,14 +39,20 @@ class ProductService {
     }
 
     async findOne(id){
-        const a = this.exe()
-        return this.products.find(product => product.id === id)
+        const product = this.products.find(product => product.id === id)
+        if(!product){
+            throw notFound("Product not found")
+        }
+        if(product.isBlock){
+            throw conflict("Product is blocked")
+        }
+        return product
     }
 
     async update(id, data){
         const index = this.products.findIndex(product => product.id === id)
         if(index === -1){
-            throw new Error('Product not found')
+            throw notFound("Product not found")
         }
         const product = this.products[index]
         this.products[index] = {id, product, ...data}
