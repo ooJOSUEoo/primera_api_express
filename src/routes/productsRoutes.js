@@ -2,7 +2,7 @@ const express = require('express');
 const {faker} = require('@faker-js/faker');
 
 const router = express.Router();
-
+//get ----------
 router.get('/', (req, res) => {
   const products = []
   const {size} = req.query
@@ -28,11 +28,32 @@ router.get('/:id', (req, res) => {
   })
 })
 
+//post ----------
 router.post('/', (req, res) => {
   const body = req.body
   res.json({
     message: 'created',
     data: body
+  })
+})
+
+//patch ----------
+router.patch('/:id', (req, res) => {
+  const {id} = req.params
+  const body = req.body
+  res.json({
+    message: 'updated',
+    data: body,
+    id
+  })
+})
+
+//delete ----------
+router.delete('/:id', (req, res) => {
+  const {id} = req.params
+  res.json({
+    message: 'deleted',
+    id
   })
 })
 
