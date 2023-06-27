@@ -14,6 +14,4 @@ const getConnection = async() =>{
     return client
 }
 
-module.exports = {
-    getConnection
-}
+module.exports = getConnection
