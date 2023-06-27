@@ -3,13 +3,13 @@ services:
   postgres:
     image: postgres:13
     environment:
-      - POSTGRES_PASSWORD=2002
+      - POSTGRES_PASSWORD=root
       - POSTGRES_USER=josue
       - POSTGRES_DB=my_store
     ports:
       - 5432:5432
     volumes:
-      - /src/postgres_data:/var/lib/postgresql/data
+      - ./src/postgres_data:/var/lib/postgresql/data
   
   pgadmin:
     image: dpage/pgadmin4
@@ -18,3 +18,23 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - 5050:80
+
+  mysql:
+    image: mysql:5
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=my_store
+      - MYSQL_USER=josue
+      - MYSQL_PORT=3306
+    ports:
+      - 3306:3306
+    volumes:
+      - ./src/mysql_data:/var/lib/mysql
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - PMA_HOST=mysql
+    ports:
+      - 8080:80

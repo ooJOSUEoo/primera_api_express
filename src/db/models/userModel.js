@@ -3,7 +3,7 @@ const { DataTypes, Sequelize, Model } = require("sequelize")
 
 const USER_TABLE = 'users'
 
-const userSchema = {
+const userSchema = { 
     id: {
         allowNull: false,
         autoIncrement: true,
