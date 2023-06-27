@@ -1,12 +1,12 @@
 const express = require('express');
 const UserService = require('../services/userService');
 const validatorHandler = require('../middlewares/validatorHandler');
-const { getProductSchema, createProductSchema, updateProductSchema } = require('../schemas/product.schema');
+const { updateUserSchema, createUserSchema, getUserSchema } = require('../schemas/userSchema');
 
 const router = express.Router();
 const service = new UserService();
 //get ----------
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try{
     const users  = await service.find()
     res.json(users)
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     next(error)
   }
 })
-router.get('/:id', validatorHandler(getProductSchema,'params'), async (req, res, next) => {
+router.get('/:id', validatorHandler(getUserSchema,'params'), async (req, res, next) => {
   try {
     const {id} = req.params
     const product = await service.findOne(id)
@@ -26,14 +26,18 @@ router.get('/:id', validatorHandler(getProductSchema,'params'), async (req, res,
 })
 
 //post ----------
-router.post('/', validatorHandler(createProductSchema,'body'), async (req, res) => {
-  const body = req.body
-  const product = await service.create(body)
-  res.status(201).json(product)
+router.post('/', validatorHandler(createUserSchema,'body'), async (req, res, next) => {
+  try {
+    const body = req.body;
+    const newCategory = await service.create(body);
+    res.status(201).json(newCategory);
+  } catch (error) {
+    next(error);
+  }
 })
 
 //patch ----------
-router.patch('/:id', validatorHandler(getProductSchema,'params'), validatorHandler(updateProductSchema,'body'), async (req, res) => {
+router.patch('/:id', validatorHandler(getUserSchema,'params'), validatorHandler(updateUserSchema,'body'), async (req, res) => {
   try {
     const {id} = req.params
     const body = req.body

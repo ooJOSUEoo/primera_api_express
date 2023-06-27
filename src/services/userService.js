@@ -6,7 +6,8 @@ class UserService {
     constructor(){}
 
     async create(data){
-        return data
+        const newUser = await models.User.create(data)
+        return newUser
     }
 
     async find(){
@@ -15,11 +16,23 @@ class UserService {
     }
 
     async findOne(id){
-        return {id}
+        const user = await models.User.findByPk(id)
+        if(!user){
+            throw boom.notFound("User not found")
+        }
+        return user
     }
 
     async update(id, data){
-        return {id, data}
+        const user = await this.findOne(id)
+        const resp = await user.update(data)
+        return resp
+    }
+
+    async delete(id){
+        const user = await this.findOne(id)
+        const resp = await user.destroy()
+        return resp
     }
 }
 
