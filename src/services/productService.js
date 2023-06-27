@@ -1,6 +1,7 @@
 const { notFound, conflict } = require("@hapi/boom")
 const faker = require("faker")
 const pool = require("../libs/postgresPool")
+const sequelize = require("../libs/sequelize")
 
 class ProductService {
 
@@ -37,8 +38,8 @@ class ProductService {
 
     async find(){
         const query = 'SELECT * FROM tasks'
-        const resp = await this.pool.query(query)
-        return resp.rows
+        const [data] = await sequelize.query(query)
+        return data
     }
 
     async findOne(id){
