@@ -35,8 +35,8 @@ const userSchema = {
 class User extends Model {
     static associate(models) {
         this.hasOne(models.Customer, {
-          as: 'customer',
-          foreignKey: 'user_id'
+           as: 'customer',
+           foreignKey: 'user_id'
         });
       } 
       
