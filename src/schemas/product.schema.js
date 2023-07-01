@@ -8,6 +8,9 @@ const description = Joy.string()
 const image = Joy.string().uri()
 const categoryId = Joy.number().integer()
 
+const limit = Joy.number().integer()
+const offset = Joy.number().integer()
+
 const createProductSchema = Joy.object({
     name: name.required(),
     price: price.required(),
@@ -28,8 +31,14 @@ const getProductSchema = Joy.object({
     id: id.required()
 })
 
+const queryProductSchema = Joy.object({
+    limit,
+    offset
+})
+
 module.exports = {
     createProductSchema,
     updateProductSchema,
-    getProductSchema
+    getProductSchema,
+    queryProductSchema
 }
