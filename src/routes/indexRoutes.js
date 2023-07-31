@@ -6,6 +6,7 @@ const categoryRoutes = require('./categoryRoutes')
 const orderRoutes = require('./orderRoutes')
 const authRouter = require('./authRoutes');
 
+const profileRouter = require('./profileRouter');
 
 const routerAPI = (app) => {
   const router = express.Router();
@@ -16,6 +17,7 @@ const routerAPI = (app) => {
   router.use("/categories",categoryRoutes)
   router.use("/orders",orderRoutes)
   router.use('/auth', authRouter);
+  router.use('/profile', profileRouter);
 }
 
 module.exports = routerAPI
