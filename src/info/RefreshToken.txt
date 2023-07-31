@@ -1,0 +1,1 @@
+Cuando se diseña una aplicación web, la autenticación es una de las piezas claves, ya que la seguridad depende en gran medida de este punto. La autenticación con tokens supuso un gran avance en este aspecto, y el refresh token llegó para complementarla y hacerla usable.
